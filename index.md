@@ -1,6 +1,19 @@
 ---
 title: Home
 layout: home
+nav_order: 1
+last_modified_date: 2025-05-21
+---
+
+## Donate to the BananaHackers team
+
+* **Luxferre**, founding BananaHackers team member, developer of Wallace tools:
+  * Monero: `86neopbgniu1bQ4EXL7oU6V6nFQE8VGebBpNbUVHWzPuFG1LH2Ca84eHFkqgNnEkC7ERrf4uXV2PXeMGREKXPYrb8qBFjzR`
+* **perry**, developer of o.map, feedolin, greg (calendar app), BananaHackers Wiki administrator, maintainer and contributor: [LiberaPay](https://liberapay.com/perry_______/donate) (requires an account), [PayPal](https://www.paypal.me/strukturart)
+* **sunsetonwheels**, BananaHackers Store developer and r/KaiOS Discord admin: [Revolut](https://revolut.me/sunsetsonwheels), [Stripe](https://donate.stripe.com/bIY9DlcnefdAfaU8ww)
+* **Ivan Alex HC**, founder of the BananaHackers team: [PayPal](https://www.paypal.com/paypalme/ivanalexhc)
+* **bmndc**, BananaHackers GitHub organization admin and Wiki contributor: [GitHub Sponsors](https://github.com/sponsors/bmndc) (requires an account)
+
 ---
 
 This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.

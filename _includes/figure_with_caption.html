@@ -1,0 +1,6 @@
+<figure>
+    <img src="{{ include.src }}" alt="{{ include.alt || default: '' }}">
+    {% if include.caption %}
+        <figcaption class="fs-3 text-left">{{ include.caption }}</figcaption>
+    {% endif %}
+</figure>

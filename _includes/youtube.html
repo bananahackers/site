@@ -1,0 +1,12 @@
+{% comment %}
+	To use: include youtube.html id='VIDEO_ID_HERE' caption='IFRAME_CAPTION_HERE'
+{% endcomment %}
+
+<figure class="text-center mx-0-auto w-full" style="max-width: 100%;">
+	<div style="position: relative; overflow: hidden; margin: 0 auto 5px; padding-bottom: 56.25%;">
+		<iframe width="853" height="480" src="https://www.youtube-nocookie.com/embed/{{ include.id }}" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+	</div>
+	{% if include.caption %}
+		<figcaption class="fs-3 text-left">{{ include.caption }}</figcaption>
+	{% endif %}
+</figure>
