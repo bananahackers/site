@@ -1,7 +1,7 @@
 ---
 title: Change or remove apps from the homescreen carousel
 parent: Customisation
-last_modified_date: 2025-05-28
+last_modified_date: 2025-06-01
 ---
 # Change or remove apps from the homescreen carousel
 {:.no_toc}
@@ -16,6 +16,8 @@ KaiOS may display five apps on the left of the homescreen, which change based on
 You can change their order, replace or remove any of them by modifying the set configuration in `launcher.gaiamobile.org`.
 
 *Before you start, make sure you have a KaiOS 2.5 device with debugging mode activated, and a computer with Android Debug Bridge (ADB) ready. This guide assumes you are comfortable sideloading apps using ADB and WebIDE.*
+
+*On Windows, we recommend using [7-Zip](https://7-zip.org) to avoid app packaging errors.*
 
 If your device doesn't have Busybox, [download OmniBB from the BananaHackers Store](https://store.bananahackers.net#omnibb) and use ADB and WebIDE to sideload the app onto your phone. Once OmniBB opens, press <kbd>OK</kbd> on your phone to temporarily load Busybox onto the system, and wait until the app displays the "Busybox loaded" alert.
 
@@ -33,7 +35,7 @@ List of devices attached
 1a2b3c4d        device
 ```
 
-{:style="counter-reset:none"}
+{:style="counter-reset:none" start="3"}
 3. Get the launcher app from `/system` and the list of installed apps from `/userdata` to use as reference:
 
 ```console
@@ -41,9 +43,9 @@ adb pull /system/b2g/webapps/launcher.gaiamobile.org
 adb pull /data/local/webapps/webapps.json
 ```
 
-ADB will save the pulled files into the folder where you execute the commands from.
+ADB will save the pulled files into the folder where you execute the command from.
 
-{:style="counter-reset:none"}
+{:style="counter-reset:none" start="4"}
 4. Open the `webapps.json` file you've just pulled and find the JSON entry of the five apps you're going to put in the homescreen carousel. Note down the `manifestURL` of those apps.  
      
    You can also find a list of `manifestURL` for some example apps [below](#reference-manifest-urls-of-preinstalled-apps). For example, if your device is on KaiOS 2.5, and you want to have Messages, E-Mail, WhatsApp, Calendar and Clock in the carousel, their `manifestURL` are:
@@ -56,8 +58,10 @@ ADB will save the pulled files into the folder where you execute the commands fr
 | Calendar | app://calendar.gaiamobile.org/manifest.webapp |
 | Clock | app://clock.gaiamobile.org/manifest.webapp |
 
-{:style="counter-reset:none"}
-5. 
+{:style="counter-reset:none" start="5"}
+5. Open the `launcher.gaiamobile.org` application folder you've pulled and extract the `application.zip`. Find and open the `app.bundle.js` located under the `dist` sub-folder of the extracted folder.
+
+Now, here's the tricky part. With each KaiOS version, the code for 
 
 ## Reference manifest URLs of preinstalled apps
 
@@ -98,7 +102,6 @@ Excluding preinstalled OriginData games and device/regional-specific apps, e.g. 
 | KaiWeather | https://api.kaiostech.com/apps/manifest/hY_EHJAESdznRYwwfqsL | Cached: http://kaios-weather.localhost/manifest.webmanifest<br/><nobr>update_url: https://api.kaiostech.com/apps/manifest/hY_EHJAESdznRYwwfqsL</nobr> |
 | QR Reader | https://api.kaiostech.com/apps/manifest/mwkpcuFJhk_Eeema8-fu | |
 | To-Do | https://api.kaiostech.com/apps/manifest/kvtKx4hVe-wM9jPIn39P | Cached: http://kaios-todo.localhost/manifest.webmanifest<br/><nobr>update_url: https://api.kaiostech.com/apps/manifest/kvtKx4hVe-wM9jPIn39P</nobr> |
-| <nobr>snake-premium</nobr> | app://snake-premium.gaiamobile.org/manifest.webapp | |
 | antitheft | app://antitheft.gaiamobile.org/manifest.webapp | http://antitheft.localhost/manifest.webmanifest |
 | bluetooth | app://bluetooth.gaiamobile.org/manifest.webapp | http://bluetooth.localhost/manifest.webmanifest |
 | callscreen | app://callscreen.gaiamobile.org/manifest.webapp | http://callscreen.localhost/manifest.webmanifest |
@@ -116,6 +119,7 @@ Excluding preinstalled OriginData games and device/regional-specific apps, e.g. 
 | network-alerts | app://network-alerts.gaiamobile.org/manifest.webapp | http://network-alerts.localhost/manifest.webmanifest |
 | ringtones | app://ringtones.gaiamobile.org/manifest.webapp | http://ringtones.localhost/manifest.webmanifest |
 | shared | | http://shared.localhost/manifest.webmanifest |
+| <nobr>snake-premium</nobr> | app://snake-premium.gaiamobile.org/manifest.webapp | |
 | system | app://system.gaiamobile.org/manifest.webapp | http://system.localhost/manifest.webmanifest |
 | wallpaper | app://wallpaper.gaiamobile.org/manifest.webapp | http://wallpaper.localhost/manifest.webmanifest |
 | wappush | app://wappush.gaiamobile.org/manifest.webapp | http://wappush.localhost/manifest.webmanifest |

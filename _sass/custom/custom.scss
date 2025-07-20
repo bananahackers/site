@@ -3,16 +3,19 @@
     float: right;
   }
 }
-.overflow-none {
-  overflow: hidden;
+.continue {
+  counter-reset: none;
 }
 .w-full {
   width: 100%;
 }
-figure {
-  display: table;
+figure.figure-caption {
+  display: inline-table;
 }
-figcaption {
+.figure-caption > figcaption {
   display: table-caption;
   caption-side: bottom;
+}
+#reference-manifest-urls-of-preinstalled-apps ~ .table-wrapper table {
+  width: max-content;
 }

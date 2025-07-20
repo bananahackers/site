@@ -1,7 +1,11 @@
 ---
-title: Devices (redirects to Wiki) &nearr;
+title: Devices
 nav_order: 2
+has_toc: false
 ---
-<script>setTimeout(() => {window.location.replace("https://wiki.bananahackers.net/devices");},3000);</script>
+# Devices
+{:.no_toc}
 
-We're redirecting you to the Devices page on BananaHackers Wiki very shortly...
+[Devices on BananaHackers Wiki]{:.btn.btn-primary role="button"}
+
+[Devices on BananaHackers Wiki]: https://wiki.bananahackers.net/devices

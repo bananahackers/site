@@ -22,12 +22,12 @@ aux_links:
 aux_links_new_tab: true # Open auxiliary links in new tab instead of redirecting
 
 nav_external_links:
-  - title: W2D Jailbreak & Hotspot &nearr;
+  - title: W2D Jailbreak & Hotspot
     url: http://w2d.js.org
-    hide_icon: true
-  - title: Back to old BananaHackers &nearr;
+    # hide_icon: true
+  - title: Back to old BananaHackers
     url: https://ivan-hc.github.io/bananahackers
-    hide_icon: true
+    # hide_icon: true
 
 back_to_top: true
 back_to_top_text: "Back to top"
@@ -36,22 +36,25 @@ last_edit_timestamp: true
 last_edit_time_format: "%e %B, %Y"
 
 gh_edit_link: true
-gh_edit_link_text: "View this page on GitHub &nearr;"
+gh_edit_link_text: "View this page on GitHub"
 gh_edit_repository: "https://github.com/bananahackers/site"
 gh_edit_branch: "main"
 gh_edit_view_mode: tree
 
 callouts_level: quiet
 callouts:
+  highlight:
+    color: yellow
   warning:
     title: Warning
     color: yellow
-  caution:
-    title: Caution
+  important:
+    title: Important
     color: red
   note:
     title: Note
     color: blue
+    opacity: 0.15
   tip:
     title: Tip
     color: green
@@ -61,3 +64,13 @@ defaults:
       path: ""
     values:
       layout: "default"
+
+collections:
+  projects:
+    permalink: "/:collection/:path/"
+    output: true
+
+just_the_docs:
+  collections:
+    projects:
+      name: Projects

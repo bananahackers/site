@@ -1,9 +1,9 @@
 ---
-title: Hide or remove pre-installed apps
+title: Hide or remove pre-installed apps or bloatware
 parent: Customisation
-last_modified_date: 2025-05-27
+last_modified_date: 2025-06-03
 ---
-# Hide or remove pre-installed apps
+# Hide or remove/uninstall pre-installed apps or bloatware
 {:.no_toc}
 
 Besides the built-in apps, to offset the manufacturing cost of KaiOS devices and to advertise to new Internet users, device manufacturers and KaiOS Technologies often include extra apps with advertisements and free trials within the operating system. Although these apps take very minimal system space, for many users, removing those unnecessary or distracting "bloatware" is considered a common practice when they set up a new KaiOS device.
@@ -30,7 +30,11 @@ Changes are only made in userspace, and can be undone through the app or with a 
 
 To start, [download AppBuster as a ZIP package](https://github.com/bmndc/AppBuster/archive/refs/heads/main.zip) and use ADB and WebIDE to sideload the app on your phone. Once the app opens, use the Up/Down D-Pad keys to navigate through the list of apps, and press the number keys associated with the apps you want to hide. Press <kbd>#</kbd> to apply.
 
-<!-- TODO: insert images here -->
+<div class="text-center">
+   {% include figure_with_caption.html src="/assets/images/uninstalling-pre-installed-apps/1.png" caption="1. Open AppBuster and select the apps you want to hide. Use D-Pad Up/Down to switch to the previous or next page of the app list." class="mr-lg-4 mb-4" %}
+   {% include figure_with_caption.html src="/assets/images/uninstalling-pre-installed-apps/2.png" caption="2. Press the number key associated with the name of the app you want to hide. Hidden apps will be struck-through and greyed out." class="mr-lg-4 mb-4" %}
+   {% include figure_with_caption.html src="/assets/images/uninstalling-pre-installed-apps/3.png" caption="3. Once you're done, press <kbd>#</kbd> to apply the changes. Follow the prompt and manually restart your phone." class="mb-4" %}
+</div>
 
 Follow the prompt and restart your phone by holding down the Power key. On KaiOS 2.5.3 and later, you can also perform a Deep Memory Cleaning, which restarts the B2G engine and applies the changes.
 
@@ -170,8 +174,48 @@ adb pull /sdcard/webapps.json
 {:.tip}
 > Before proceeding, you may want to make a copy of the `webapps.json` just in case.
 
-{:style="counter-reset:none"}
+{:style="counter-reset:none" start="3"}
 3. Open the pulled `webapps.json` with a text editor that preserves LF line endings. On Windows 10 version 1803 and earlier versions of Windows, you can use [Notepad++](https://notepad-plus-plus.org). For every app you might want to uninstall, change the `"removable"` field/line of its entry from `"removable": false,` to `"removable": true,`
+
+```diff
+  "dangerdash-premium.gaiamobile.org": {
+    "origin": "app://dangerdash-premium.gaiamobile.org",
+    "installOrigin": "app://dangerdash-premium.gaiamobile.org",
+    "receipt": null,
+    "installTime": 1519516800000,
+    "updateTime": 1533254400000,
+    "manifestURL": "app://dangerdash-premium.gaiamobile.org/manifest.webapp",
+    "localId": 1053,
+    "appStatus": 3,
+    "manifestHash": "477edbd8bc9ee6657c34bac2b8a5d23f",
+    "packageHash": "33ddc5780dbf177cbf46f5fb9d5713d7",
+    "basePath": "/system/b2g/webapps",
+    "id": "dangerdash-premium.gaiamobile.org",
+-   "removable": false,
++   "removable": true,
+    "enabled": false,
+    "preinstalled": true,
+    "kind": "packaged",
+    "name": "Danger Dash",
+    "csp": "",
+    "role": "",
+    "userAgentInfo": "",
+    "oldVersion": "1.1.1",
+    "widgetPages": [],
+    "redirects": null,
+    "additionalLanguages": {},
+    "installerAppId": 0,
+    "installerIsBrowser": false,
+    "installState": "installed",
+    "storeId": "",
+    "storeVersion": 0,
+    "blockedStatus": 0,
+    "downloading": false,
+    "readyToApplyDownload": false
+  },
+```
+
+{:style="counter-reset:none" start="4"}
 4. Use ADB to push the modified `webapps.json` file back in its place:
    * ADBroot and Wallace: `adb push webapps.json /data/local/webapps/`
    * Telnetd:
@@ -210,7 +254,7 @@ In case you have a rooted 2780 Flip or another debug-enabled KaiOS 3 device, the
 adb pull /data/local/webapps/webapps.json
 ```
 
-{:style="counter-reset:none"}
+{:style="counter-reset:none" start="3"}
 3. Open the pulled `webapps.json` with a text editor that preserves LF line endings. On Windows 10 version 1803 and earlier versions of Windows, you can use [Notepad++](https://notepad-plus-plus.org);
 4. For every app you might want to uninstall, change the `"removable"` field/line of its entry from `"removable": false,` to `"removable": true,`, or add the field/line if necessary;
 5. Save the file and push it back into place:
@@ -219,7 +263,7 @@ adb pull /data/local/webapps/webapps.json
 adb push webapps.json /data/local/webapps
 ```
 
-{:style="counter-reset:none"}
+{:style="counter-reset:none" start="6"}
 6. Restart the phone. You may then highlight any app in the app launcher, select Options, Uninstall and confirm to delete.
 
-Please let us know via Google Groups, Reddit or Discord if you have any problems following this procedure on any debug-enabled KaiOS 3 device, or if you get this to work. We really appreciate it.
+> Please let us know via Google Groups, Reddit or Discord if you have any problems following this procedure on any debug-enabled KaiOS 3 device, or if you get this to work. We really appreciate it.
