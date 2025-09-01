@@ -63,12 +63,11 @@ TextScramble.prototype.update = function() {
     }
 };
 
-const phrases = [
-    "Welcome to the new BananaHackers.net",
-    "JOIN THE REVOLUTION!"
-];
-
 const el = document.querySelector('.scramble');
+const phrases = [
+    el.textContent,
+    el.getAttribute('data-text2') || '',
+];
 const fx = new TextScramble(el);
 
 let counter = 0;

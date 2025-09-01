@@ -4,6 +4,8 @@ parent: Debugging on actual devices
 ---
 # CLI programs: `gdeploy` and `make-kaios-install`
 {:.no_toc}
+KaiOS 2.5
+{:.label.mx-0}
 
 ## gdeploy
 
@@ -11,9 +13,9 @@ parent: Debugging on actual devices
 
 {:.note}
 > KaiOS 1.0 and KaiOS 2.5 only. For debug-enabled KaiOS 3 devices, please refer to the instructions for using KaiOS’s `appscmd` CLI tool in [appscmd] or on [the official Developer Portal].
-> 
+>
 > Before proceeding, ensure [your phone is debug-enabled] or that you’ve taken steps to enable debugging.
-> 
+>
 > Much of this guide involves interacting with your operating system's terminal. If you're not comfortable using a command-line interface, and you're not in a situation where using `gdeploy` is necessary, we generally advise following [ADB and WebIDE] to install third-party apps instead.
 
 ### What we need
@@ -24,7 +26,7 @@ parent: Debugging on actual devices
 
 ## make-kaios-install
 
-[appscmd]: {% link development/debugging/appscmd.md %}
+[appscmd]: {% link development/debugging-on-actual-devices/appscmd.md %}
 [the official Developer Portal]: https://developer.kaiostech.com/docs/sfp-3.0/getting-started/env-setup/os-env-setup
 [your phone is debug-enabled]: {% link devices.md %}
-[ADB and WebIDE]: {% link development/debugging/webide.md %}
+[ADB and WebIDE]: {% link development/debugging-on-actual-devices/adb-and-webide.md %}

@@ -6,13 +6,11 @@ last_modified_date: 2025-06-03
 # Hide or remove/uninstall pre-installed apps or bloatware
 {:.no_toc}
 
-Besides the built-in apps, to offset the manufacturing cost of KaiOS devices and to advertise to new Internet users, device manufacturers and KaiOS Technologies often include extra apps with advertisements and free trials within the operating system. Although these apps take very minimal system space, for many users, removing those unnecessary or distracting "bloatware" is considered a common practice when they set up a new KaiOS device.
+Besides the system apps, to offset the manufacturing cost of KaiOS devices and to advertise to new Internet users, device manufacturers and KaiOS Technologies often include extra apps with advertisements and free trials within the operating system. Although these apps take very minimal system space, for many users, removing those unnecessary or distracting "bloatware" is considered a common practice when they set up a new KaiOS device.
 
 When you set up a new device or reset one to factory default settings, apps are copied from the stock "installation media" located at `/system/b2g/webapps` to the designated userspace application folder at `/data/local/webapps` before the out-of-box setup experience (OOBE) starts. If you have a working Internet connection during the OOBE, either from mobile data or Wi-Fi, KaiOS will attempt to install and update extra apps from KaiStore.
 
 To hide or remove/uninstall those apps, you may use either Busybox or ADB to sideload tools that hide them from the app launcher, or remove them from `/userdata` and/or `/system` partitions.
-
-*Before you start, make sure you have a KaiOS 2.5 device with debugging mode activated, and a computer with Android Debug Bridge (ADB) ready. This guide assumes you are comfortable sideloading apps using ADB and WebIDE.*
 
 1. ToC
 {:toc}
@@ -20,7 +18,11 @@ To hide or remove/uninstall those apps, you may use either Busybox or ADB to sid
 {:.note}
 > On some KaiOS versions, there might be one or two folders named "Games" and "Utilities". These are from the launcher and cannot be removed using this guide; you need to modify the `launcher.gaiamobile.org` instead.
 
-## AppBuster
+## KaiOS 2.5 and earlier
+
+*Before you start, make sure you have a KaiOS 2.5 device with debugging mode activated, and a computer with Android Debug Bridge (ADB) ready. This guide assumes you are comfortable sideloading apps using ADB and WebIDE.*
+
+### AppBuster
 
 Originally made by Luxferre, AppBuster uses the `navigator.mozApps.mgmt.setEnabled` API to hide apps you don't need from the app launcher and allows you to later re-enable them if you change your mind. Unlike the options below, the app does not use the `engmode-extension` permission to modify the system, so you can install it on devices with restrictive `devtools.apps.forbidden-permissions` setting.
 
@@ -42,7 +44,7 @@ To undo, repeat the instructions but use D-Pad Up/Down and number keys to remove
 
 Source code for the modified version of AppBuster shown is available at [https://github.com/bmndc/AppBuster](https://github.com/bmndc/AppBuster).
 
-## Wallace Toolbox and Busybox
+### Wallace Toolbox and Busybox
 
 Wallace Toolbox is an advanced utility for KaiOS 2.5 devices developed by Luxferre. It offers a comprehensive set of scripts for applying tweaks found in GerdaOS on stock KaiOS and making modifications to the operating system.
 
@@ -50,7 +52,7 @@ Version 6 of the tool, released on 28 September 2020, can now set all installed 
 
 {:.note}
 > Wallace Toolbox requires the `engmode-extension` permission on KaiOS 2.5.1 and later, `kaiosextension` permission on KaiOS 2.5 and `jrdextension` permission on KaiOS 1.0 to function.
-> 
+>
 > If your device prohibits sideloading apps that require these permissions, you may need to root your phone and use WebIDE to clear the `devtools.apps.forbidden-permissions` Device Preferences setting, or use AppBuster instead.
 
 Changes are only made in userspace, and can be undone with a factory reset.
@@ -71,7 +73,10 @@ Because the app is completely removed from `/userdata`, to undo, you must perfor
 
 Source code for OmniBB and Wallace Toolbox are available at [https://gitlab.com/suborg/omnibb](https://gitlab.com/suborg/omnibb) and [https://gitlab.com/suborg/wallace-toolbox](https://gitlab.com/suborg/wallace-toolbox) respectively.
 
-## Complete wipe from `/system` with Wallace Toolbox and Busybox
+### Complete wipe from `/system` with Wallace Toolbox and Busybox
+
+Dangerous
+{:.label.mx-0.label-red}
 
 {:.caution}
 > Back up the `/system` partition before proceeding. Once you make permanent changes to the system, it will stay that way and even a factory reset cannot undo those changes.
@@ -86,9 +91,9 @@ Connect your phone to the computer with ADB installed and execute this to list a
 
 ```console
 $ adb devices
-* daemon not running; starting now at tcp:5037  
-* daemon started successfully  
-List of devices attached  
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
+List of devices attached
 1a2b3c4d        device
 
 $ adb shell ls /system/b2g/webapps
@@ -97,7 +102,7 @@ $ adb shell ls /system/b2g/webapps
 
 Once you determine which app you want to remove, execute this to grant yourself read-write access to `/system`. Note that even when you remount `/system` as read-write, the app folders under `/system/b2g/webapps` are still read-only (read-write for item owners, which is system), so you need to grant yourself permissions to write changes to the folders:
 
-*If you're interested in what `chmod` does, consider reading [chmod on Wikipedia](https://en.wikipedia.org/wiki/Chmod) and [File permissions and attributes on Arch Linux Wiki](https://wiki.archlinux.org/title/File_permissions_and_attributes).*
+*If you're interested in `chmod`, consider reading [chmod on Wikipedia](https://en.wikipedia.org/wiki/Chmod) and [File permissions and attributes on Arch Linux Wiki](https://wiki.archlinux.org/title/File_permissions_and_attributes).*
 
 ```console
 $ adb shell mount -o rw,remount /system
@@ -139,14 +144,14 @@ webapps.json: 1 file pushed, 0 skipped. 89.4 MB/s (120424 bytes in 0.001s)
 $ adb reboot
 ```
 
-### Q: If I accidentally deleted an app, can I restore it by sideloading through WebIDE?
+#### Q: If I accidentally deleted an app, can I restore it by sideloading through WebIDE?
 {:.no_toc}
 
 Although it's technically possible, you should not. Some built-in apps, like KaiStore, have special permissions to the system beyond those defined in `/data/local/webapps/webapps.json`. Sideloading these apps with WebIDE can’t replicate these permissions, which can cause some of their functionalities to fail.
 
 In the case of KaiStore, KaiOS defines apps installed from the pre-installed KaiStore as originating from a different source compared to those installed using the new KaiStore. Sideloaded KaiStore cannot update apps installed using the built-in KaiStore, and vice versa. If you wish to use the new KaiStore, you may need to reinstall the apps you installed before removing KaiStore.
 
-## Telnetd, ADBroot and Wallace (legacy)
+### Telnetd, ADBroot and Wallace (legacy)
 
 *Kudos to Speeduploop, original BananaHackers team member, for writing this guide ([original topic on Google Groups](https://groups.google.com/d/msg/bananahackers/A9ATI7q1QJk/SO8vp2fmAwAJ))*
 
@@ -243,12 +248,18 @@ Changes are only made in userspace, and can be undone with a factory reset.
 
 ## KaiOS 3 and later
 
+### Note on the Internet app (built-in browser)
+
+### ostore
+
+### Manual uninstall
+
 For debug-enabled KaiOS 3 devices, we believe the process should be similar to that of KaiOS 2.5 devices. We are, however, unable to verify that since we do not have the only debug-enabled KaiOS 3 device, the Nokia 2780 Flip, and almost all other v3 devices are debug-locked and only available in the US.
 
 In case you have a rooted 2780 Flip or another debug-enabled KaiOS 3 device, the process should be as follows:
 
 1. Connect your phone to a computer with ADB installed, and run `adb devices` to start the ADB server;
-2. Use ADB to pull `webapps.json` from userdata: 
+2. Use ADB to pull `webapps.json` from userdata:
 
 ```console
 adb pull /data/local/webapps/webapps.json

@@ -6,6 +6,9 @@ last_modified_date: 2025-06-25
 # ADB and WebIDE
 {:.no_toc}
 
+KaiOS 2.5
+{:.label.m-0}
+
 Now, let's learn how to install and debug third-party applications on your KaiOS device using ADB and WebIDE. This lets us install apps which might not be available from KaiStore, or ones that you are developing.
 
 Android Debug Bridge, or ADB, is a powerful program bundled within Android SDK Platform Tools and Android Studio that app developers, power users and enthusiasts use to communicate and debug Android-based devices. It unlocks access to functions beyond what the normal user interface provides, such as monitoring system logs, controlling their phones through shell access, installing APKs, tweaking the system by setting device properties.
@@ -18,12 +21,12 @@ We'll refer to this guide as the officially supported method of installing third
 
 {:.warning}
 > This guide only applies to debug-enabled KaiOS 2.5 devices. For debug-enabled KaiOS 3 devices, refer to the instructions for using KaiOS’s `appscmd` CLI tool in [appscmd] or on [the official Developer Portal].
-> 
-> Because all browsers below are only compiled for x86_64 architecture, Apple Silicon Macs (since macOS 28) and armhf/aarch64 Linux users will need to use `gdeploy` or [build one of the browsers below from source]. ARM64 Windows users may continue to follow the guide and use the browsers below with the Prism translation layer.
+>
+> Because all browsers below are only compiled for x86_64 architecture, Apple Silicon Macs (since macOS 28) and armhf/aarch64 Linux users will need to use `gdeploy` or [build one of the browsers below from source]. Windows on ARM users may continue to follow the guide and use the browsers below with the Prism translation layer.
 > {:.text-red-300}
-> 
+>
 > Before proceeding, ensure [your phone is debug-enabled] or that you’ve taken steps to enable debugging.
-> 
+>
 > **Be cautious when installing apps from unknown sources!** It’s always a good idea to proofread an app’s source code. Even with security measures like prohibiting apps with the `engmode-extension` permission, KaiOS is still [prone to][1] [malicious code][2] which can result in performance degradation, data loss or worse.
 
 ## What we need
@@ -71,8 +74,8 @@ Start the ADB daemon by typing `adb devices`. ADB will automatically detect your
 
 ```console
 $ adb devices
-* daemon not running; starting now at tcp:5037  
-* daemon started successfully  
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
 List of devices attached
 1a2b3c4d        device
 ```
@@ -216,7 +219,7 @@ Finally, re-run `adb devices`.
 [the hidden Developer menu]: https://w2d.bananahackers.net
 [makes significant use of Android's well-established hardware compatibility]: https://kaios.dev/2024/03/kaios-system-properties/
 [Built on the former Firefox OS App Manager]: https://www.infoq.com/news/2014/06/webide/
-[appscmd]: {% link development/debugging/appscmd.md %}
+[appscmd]: {% link development/debugging-on-actual-devices/appscmd.md %}
 [the official Developer Portal]: https://developer.kaiostech.com/docs/sfp-3.0/getting-started/env-setup/os-env-setup
 [your phone is debug-enabled]: {% link devices.md %}
 [1]: https://www.reddit.com/r/KaiOS/comments/1d0iur3/security_analysis_of_the_kaios_feature_phone/ "Note: Fabrice Desré, former Chief Architect of KaiOS Technologies, confirmed that there are factual errors in the report i.e. apps are handled in their own processes rather than in the same runtime, and that the research team never contacted KaiOS."

@@ -48,8 +48,8 @@ callouts:
   warning:
     title: Warning
     color: yellow
-  important:
-    title: Important
+  caution:
+    title: Caution
     color: red
   note:
     title: Note
