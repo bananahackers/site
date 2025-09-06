@@ -293,7 +293,8 @@ winget install --id Git.Git -e --source winget
    git clone https://github.com/bkerler/edl.git && cd edl && ^
    git submodule update --init --recursive && ^
    python3 -m venv .venv && .\.venv\Scripts\activate.bat && ^
-   pip3 install -r requirements.txt
+   pip3 install -r requirements.txt && ^
+   pip3 install setuptools
    ```
   - andybalholm's EDL:
    ```batch
@@ -316,15 +317,17 @@ winget install --id Git.Git -e --source winget
 
     In both cases, the screen should flash the 'enabled by KaiOS' logo then become blank. This is normal behaviour letting you know your phone is in EDL mode and you can proceed.
 
-8. To replace the installed `qcusbser` driver with `libusb-win32` for use with edl.py, download and open [Zadig] (do NOT use the version included in the EDL package). Tick Options, List All Devices and select `QHSUSB__BULK` (your device in EDL mode) in the main dropdown menu.
+8. To replace the installed `qcusbser` driver with the WinUSB (libusb) driver for use with edl.py, download and open [Zadig] (do NOT use the version included in the EDL package). Select Options in the menu bar, tick List All Devices and select `QHSUSB__BULK` (your device in EDL mode) in the main dropdown menu.
 
-    In the target driver box, which the green arrow is pointing to, click the up/down arrows until you see `libusb-win32 (v1.2.7.3)` or `libusb0 (v1.2.5.0)`, then click Replace Driver.
+    In the target driver box, to which the green arrow is pointing, click the up/down arrows until you see `WinUSB (v6.1.7600.16385)` (for bkerler's edl.py) or `libusbK (v3.2.0.0)` (for andybalholm's edl.py), then click Replace Driver.
 
-![](/assets/images/patching-the-boot-partition/qhsusb-zadig.gif)
+![Screenshot of the Zadig program window. QHSUSB_BULK is selected as the targeted device. On the Driver line, a text box with the content qcusbser (v2.1.2.0) is pointing towards another text box with the content WinUSB (v6.1.7600.16385) with a green arrow](/assets/images/patching-the-boot-partition/qhsusb-zadig.png)
 {:.text-center}
 
 {:.note}
 > Windows will automatically create restore points on driver installation, as Zadig suggests in its tooltip. On older computers, this might cause issues with driver configuration process being lengthened past the 5-minute mark. If Zadig aborts the process and hangs, kill Zadig with Task Manager, remove and re-insert the battery on the phone to exit and re-enter EDL mode, then try to install again. (seems to be improved with Zadig 2.9)
+>
+> A previous version of this guide recommended using `libusb-win32 (v1.2.7.3)` or `libusb0 (v1.2.5.0)` as the target driver, both of which are later considered less reliable and may cause errors such as `'usb.core.USBError: [Errno None] b'libusb0-dll:err [_usb_reap_async] timeout error\n'`
 
 {:style="counter-reset:none" start="9"}
 9. If you’re configuring the driver for the first time, an “USB Device Not Recognised” pop-up may appear. Exit EDL mode by removing and re-inserting the battery, then turn on the phone in EDL mode again.
@@ -354,6 +357,11 @@ winget install --id Git.Git -e --source winget
 ```
 edl r boot boot.img
 ```
+
+{:.warning}
+> Some programs, such as TranslucentFlyouts on Windows, may interfere with edl.py.
+>
+> If you used `edl printgpt` to print the partition table, on the third command edl.py may run into error 5 `Input/Output Error`. Exit EDL mode by removing and re-inserting the battery, then turn on the phone in EDL mode, and reconnect to your computer.
 
 If you did it correctly, `edl` should be able to see your phone as running the MSM8909 (Qualcomm Snapdragon 210) chipset, pick the correct loader from the database and read your phone's boot partition. After that, you should have a copy of the boot partition with the size of 32.0 MB (32,768 KB). Pulled boot image will be saved to the current directory.
 
@@ -623,7 +631,7 @@ python3 edl.py -w boot boot.img -loader Gflip3_TMO_NPRG.mbn
 ```
 
 {:style="counter-reset:none" start="4"}
-4. Restart the phone to normal mode by typing `edl reset` or `python3 edl.py reset`. And we’re done!
+4. Restart the phone to normal mode by typing `edl reset` or `python3 edl.py -reset`. And we’re done!
 
 ## Next steps
 
