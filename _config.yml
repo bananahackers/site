@@ -2,6 +2,7 @@ title: BananaHackers
 description: >-
   A rewrite of bananahackers.net on GitHub Pages
 url: https://bananahackers.net
+baseurl: /
 logo: "/assets/images/banana.png"
 favicon_ico: "/assets/favicon.ico"
 
